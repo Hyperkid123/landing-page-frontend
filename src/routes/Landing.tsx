@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { useFlag } from '@unleash/proxy-client-react';
 
 import '../components/app-content-renderer/styles/panels.scss';
@@ -8,6 +8,15 @@ import SecondPanel from '../components/app-content-renderer/second-panel';
 import { useLoadModule } from '@scalprum/react-core';
 
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+
+// resize observer to manage classes
+import {
+  buildDataObject,
+  createResizeObserverBreakpoint,
+} from '../utils/resizeObseverPOC';
+
+// conditional styling
+import './observer-poc.scss';
 
 const getWidgetLayoutLandingPage = () => {
   const scope = 'widgetLayout';
@@ -24,12 +33,31 @@ const getWidgetLayoutLandingPage = () => {
 };
 
 const Landing = () => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    let observer: ResizeObserver;
+    if (cardRef.current) {
+      buildDataObject(cardRef.current);
+      observer = createResizeObserverBreakpoint();
+      observer.observe(cardRef.current);
+    }
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, []);
   const { isBeta } = useChrome();
   const widgetLayoutLandingPageEnabled =
     (isBeta() && useFlag('platform.landing-page.widgetization')) ||
     (!isBeta() && useFlag('platform.landing-page.widgetization-stable'));
   return (
-    <div className="land-c-page-content pf-v5-u-display-flex pf-v5-u-flex-direction-column">
+    <div
+      ref={cardRef}
+      data-size-sm="width: 600; className: red;"
+      data-size-md="width: 1200; className: blue;"
+      className="land-c-page-content pf-v5-u-display-flex pf-v5-u-flex-direction-column"
+    >
       <Fragment>
         {widgetLayoutLandingPageEnabled ? null : <FirstPanel />}
         {widgetLayoutLandingPageEnabled ? null : <SecondPanel />}
