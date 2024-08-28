@@ -89,7 +89,7 @@ const App = () => {
       ).getStore()}
     >
       <PermissionContext.Provider value={{ isOrgAdmin }}>
-        <NotificationsPortal />
+        {/* <NotificationsPortal /> */}
         <Suspense
           fallback={
             <Bullseye>
