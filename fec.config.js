@@ -10,6 +10,7 @@ module.exports = {
   plugins: [],
   chromeHost: process.env.FEC_CHROME_HOST ?? undefined,
   chromePort: process.env.FEC_CHROME_PORT ?? undefined,
+  frontendCRDPath: path.resolve(__dirname, './frontend.yml'),
   routes: {
     ...(process.env.LOCAL_PDF && {
       '/api/crc-pdf-generator': {
@@ -36,6 +37,10 @@ module.exports = {
   moduleFederation: {
     exposes: {
       './RootApp': path.resolve(__dirname, './src/moduleEntries/AppEntry.tsx'),
+      './SatelliteEntry': path.resolve(
+        __dirname,
+        './src/moduleEntries/SatelliteEntry.tsx'
+      ),
       './PdfEntry': path.resolve(__dirname, './src/moduleEntries/PdfEntry.tsx'),
       './RecentlyVisited': path.resolve(
         __dirname,
@@ -82,10 +87,17 @@ module.exports = {
         'src/components/widgets/support-case-widget.tsx'
       ),
     },
-    exclude: ['react-router-dom'],
+    exclude: ['react-router-dom', '@unleash/proxy-client-react'],
     shared: [
       { 'react-router-dom': { singleton: true, version: '*' } },
       { '@scalprum/react-core': { singleton: true, version: '*' } },
+      {
+        '@unleash/proxy-client-react': {
+          singleton: true,
+          version: '*',
+          eager: false,
+        },
+      },
     ],
   },
 };
