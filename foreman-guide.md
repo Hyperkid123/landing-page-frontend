@@ -30,7 +30,7 @@ const config: AppsConfig<{cdnPath?: string}> = {
   landing: {
     name: 'landing',
     manifestLocation: 'http://localhost:8003/server/foo/landing/fed-mods.json',
-    cdnPath: '/server/foo/landing/'
+    cdnPath: 'http://localhost:8003/server/foo/landing/'
   }
 }
 
