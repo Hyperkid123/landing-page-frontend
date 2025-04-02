@@ -10,6 +10,9 @@ module.exports = {
   plugins: [],
   chromeHost: process.env.FEC_CHROME_HOST ?? undefined,
   chromePort: process.env.FEC_CHROME_PORT ?? undefined,
+  frontendCRDPath: path.resolve(__dirname, './frontend.yml'),
+  // configure the automated public path to ensure code splitted chunks are loading based on import.meta data
+  publicPath: 'auto',
   routes: {
     ...(process.env.LOCAL_PDF && {
       '/api/crc-pdf-generator': {

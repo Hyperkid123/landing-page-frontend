@@ -8,6 +8,7 @@ objects:
     metadata:
       name: landing
     spec:
+      feoConfigEnabled: true
       envName: ${ENV_NAME}
       deploymentRepo: https://github.com/RedHatInsights/landing-page-frontend
       title: Landing
@@ -17,12 +18,10 @@ objects:
           - v1
       frontend:
         paths:
-          - /apps/langing
-      navItems:
-      - appId: landing
-        title: Red Hat Enterprise Linux
-        href: /
-        product: "Red Hat Enterprise Linux"
+          # change this pathname to the path you want to serve the app on
+          # it can be any valid pathname '/' or '/foo/bar/baz' are valid
+          # The origin will be http://localhost:8003 
+          - /foo/bar
       module:
         manifestLocation: "/apps/landing/fed-mods.json"
         modules:
