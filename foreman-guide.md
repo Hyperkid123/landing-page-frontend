@@ -6,7 +6,7 @@ First step is to install dependencies using `npm i`
 
 Second step is choosing the pathname fragment that is supposed to be used in "Fake CDN".
 
-Open the `frontend.yml` file and change the entry `objects[0].spec.frontend.paths[0]` currently it is set to `/foo/bar`. Meaning that the assets will be available on `http://localhost:8003:/foo/bar`.
+Open the `frontend.yml` file and change the entry `objects[0].spec.frontend.paths[0]` currently it is set to `/foo/bar`. Meaning that the assets will be available on `http://localhost:8003/foo/bar`.
 
 Once pathname is set, run the `npm run static` command. This will start a asset server on `http://localhost:8003/<configured pathname>`. If you need to change the port add it as an argument:
 ```sh
